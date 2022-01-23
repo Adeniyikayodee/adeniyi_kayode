@@ -207,7 +207,6 @@ async function _delete(id) {
 }
 
 // helper functions
-
 async function getUser(id) {
     if (!db.isValidId(id)) throw 'User not found';
     const user = await db.User.findById(id);
