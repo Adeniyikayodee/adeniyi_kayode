@@ -5,10 +5,125 @@ info:
   version: 1.0.0
 
 servers:
-  - url: http://localhost:4000
+  - url: http://localhost:5050
     description: Local development server
 
 paths:
+  /users/register:
+    post:
+      summary: Register a new user user and send a verification email
+      description: The first user registered in the system is assigned the `Admin` role, other users are assigned the `User` role.
+      operationId: register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Mr"
+                firstName:
+                  type: string
+                  example: "Kayode"
+                lastName:
+                  type: string
+                  example: "Adeniyi"
+                email:
+                  type: string
+                  example: "Kayode@example.com"
+                password:
+                  type: string
+                  example: "pass123"
+                confirmPassword:
+                  type: string
+                  example: "pass123"
+                acceptTerms:
+                  type: boolean
+              required:
+                - title
+                - firstName
+                - lastName
+                - email
+                - password
+                - confirmPassword
+                - acceptTerms
+      responses:
+        "200":
+          description: The registration request was successful and a verification email has been sent to the specified email address
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Registration successful, please check your email for verification instructions"
+  /users/verify-email:
+    post:
+      summary: Verify a new user with a verification token received by email after registration
+      operationId: verifyEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  example: "3c7f8d9c4cb348ff95a0b74a1452aa24fc9611bb76768bb9eafeeb826ddae2935f1880bc7713318f"
+              required:
+                - token
+      responses:
+        "200":
+          description: Verification was successful so you can now login to the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Verification successful, you can now login"
+        "400":
+          description: Verification failed due to an invalid token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Verification failed"
+  /users/forgot-password:
+    post:
+      summary: Submit email address to reset the password on a user
+      operationId: forgotPassword
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "Kayode@example.com"
+              required:
+                - email
+      responses:
+        "200":
+          description: The request was received and an email has been sent to the specified address with password reset instructions (if the email address is associated with a user)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Please check your email for password reset instructions"
   /users/authenticate:
     post:
       summary: Authenticate user credentials and return a JWT token and a cookie with a refresh token
@@ -190,121 +305,6 @@ paths:
                     example: "Invalid token"
         "401":
           $ref: "#/components/responses/UnauthorizedError"
-  /users/register:
-    post:
-      summary: Register a new user user and send a verification email
-      description: The first user registered in the system is assigned the `Admin` role, other users are assigned the `User` role.
-      operationId: register
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  example: "Mr"
-                firstName:
-                  type: string
-                  example: "Kayode"
-                lastName:
-                  type: string
-                  example: "Adeniyi"
-                email:
-                  type: string
-                  example: "Kayode@example.com"
-                password:
-                  type: string
-                  example: "pass123"
-                confirmPassword:
-                  type: string
-                  example: "pass123"
-                acceptTerms:
-                  type: boolean
-              required:
-                - title
-                - firstName
-                - lastName
-                - email
-                - password
-                - confirmPassword
-                - acceptTerms
-      responses:
-        "200":
-          description: The registration request was successful and a verification email has been sent to the specified email address
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Registration successful, please check your email for verification instructions"
-  /users/verify-email:
-    post:
-      summary: Verify a new user with a verification token received by email after registration
-      operationId: verifyEmail
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                token:
-                  type: string
-                  example: "3c7f8d9c4cb348ff95a0b74a1452aa24fc9611bb76768bb9eafeeb826ddae2935f1880bc7713318f"
-              required:
-                - token
-      responses:
-        "200":
-          description: Verification was successful so you can now login to the user
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Verification successful, you can now login"
-        "400":
-          description: Verification failed due to an invalid token
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Verification failed"
-  /users/forgot-password:
-    post:
-      summary: Submit email address to reset the password on a user
-      operationId: forgotPassword
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: "Kayode@example.com"
-              required:
-                - email
-      responses:
-        "200":
-          description: The request was received and an email has been sent to the specified address with password reset instructions (if the email address is associated with a user)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Please check your email for password reset instructions"
   /users/validate-reset-token:
     post:
       summary: Validate the reset password token received by email after submitting to the /users/forgot-password route

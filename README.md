@@ -29,7 +29,7 @@
 # To run
  1. npm install 
  2. npm start
- 3. For documentation and instructions run: http://localhost:4000/api-docs in browser
+ 3. For documentation and instructions run: http://localhost:5050/api-docs in browser
 
 ## For testing and Production, Configure in /src/config.json
  1. SMTP 
