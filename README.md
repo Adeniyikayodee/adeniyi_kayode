@@ -9,7 +9,7 @@
 
 # Set up
   In the root folder, 
-    create configh.json file with th following attribute:
+    create configh.json file with the following attribute:
 
 ```csharp
     {
