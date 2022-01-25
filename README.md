@@ -7,6 +7,23 @@
  1. Install NodeJS 14 or higher = Download NodeJS and NPM from https://nodejs.org/en/download/
  2. MongoDB Online or community version = Download from https://www.mongodb.com/download-center/community
 
+# Set up
+  In the root folder, 
+    create configh.json file with th following attributes:
+    {
+        "connectionString": "YOUR DB URL",
+        "secret": "SESSION SECRET",
+        "emailFrom": "EMAIL",
+        "smtpOptions": {
+            "host": "[ENTER SMTP OPTIONS",
+            "port": 587,
+            "auth": {
+                "user": "",
+                "pass": ""
+            }
+        }
+    }
+
 # To run
  1. npm install 
  2. npm start
