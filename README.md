@@ -9,13 +9,15 @@
 
 # Set up
   In the root folder, 
-    create configh.json file with th following attributes:
+    create configh.json file with th following attribute:
+
+```csharp
     {
-        "connectionString": "YOUR DB URL",
-        "secret": "SESSION SECRET",
-        "emailFrom": "EMAIL",
+        "connectionString": "YOUR DB URL", e.g "mongodb://localhost/node-mongo-api"
+        "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
+        "emailFrom": "EMAIL", e.g node@gmail.com
         "smtpOptions": {
-            "host": "[ENTER SMTP OPTIONS",
+            "host": "[ENTER SMTP OPTIONS"], FOR TEST, YOU CAN CREATE FREE TEST ACCOUNT IN ONE CLICK AT https://ethereal.email/
             "port": 587,
             "auth": {
                 "user": "",
@@ -23,7 +25,7 @@
             }
         }
     }
-
+```
 # To run
  1. npm install 
  2. npm start
